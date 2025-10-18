@@ -1,20 +1,20 @@
 export default async function handler(req, res) {
-  // ✅ Lấy id flipbook từ query, ví dụ ?id=1cb3bae27e
-  const flipbookId = req.query.id || "1cb3bae27e";
+  // Lấy id flipbook từ query
+  const { id } = req.query;
+  if (!id) {
+    return res.status(400).json({ error: "Thiếu id flipbook!" });
+  }
 
-  // ✅ Dán API key của bạn (bạn nên để trong biến môi trường Vercel sau)
+  // Dán API key của bạn (hoặc lấy từ biến môi trường trong Vercel)
   const apiKey = "dbb219f140da0b86b97e6d03ca81ebd854714607.fb375decc8666a41";
 
   try {
-    // ✅ Gọi API thật của Heyzine
-    const response = await fetch(
-      `https://heyzine.com/api/flipbooks/${flipbookId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-        },
-      }
-    );
+    // Gọi API Heyzine thật
+    const response = await fetch(`https://heyzine.com/api/flipbooks/${id}`, {
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+      },
+    });
 
     if (!response.ok) {
       const text = await response.text();
@@ -23,13 +23,14 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
-    // ✅ Cho phép React frontend gọi mà không bị CORS
+    // Cho phép frontend gọi không bị CORS
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "GET,OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-    res.status(200).json(data);
+
+    return res.status(200).json(data);
   } catch (error) {
-    console.error("❌ Lỗi proxy Heyzine:", error);
-    res.status(500).json({ error: "Proxy server error" });
+    console.error("❌ Lỗi khi gọi API Heyzine:", error);
+    return res.status(500).json({ error: "Proxy server error" });
   }
 }
