@@ -180,7 +180,7 @@ export default function HeyzineFlipbookWithDualOverlay() {
             height: 46,
           }}
         >
-          {showOverlay ? <EyeOff /> : <Eye />}
+          {showOverlay ? <Eye /> : <EyeOff />}
         </IconButton>
       )}
 
