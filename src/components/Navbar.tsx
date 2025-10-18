@@ -24,11 +24,7 @@ interface NavbarProps {
 }
 
 const MENU = [
-  { id: "home", label: "Tuyên ngôn độc lập" },
-    { id: "hero", label: "Hành trình" },
-  { id: "pbc", label: "Dân chủ XHCN" },
-  { id: "pct", label: "Nhà nước pháp quyền XHCN" },
-  { id: "hcm", label: "Phát huy & Xây dựng" },
+  { id: "home", label: "Flipbook CMT8" },
   { id: "quiz", label: "Quiz" },
   { id: "comparison", label: "Thông điệp" },
   { id: "transparency", label: "Tính minh bạch AI", route: "/transparency-ai" },
@@ -72,7 +68,7 @@ export default function Navbar({ onNavigate, active }: NavbarProps) {
             "&:hover": { opacity: 0.8 },
           }}
         >
-          MLN131_AI1805
+          VRN202_AI1805
         </Typography>
 
         {/* Desktop menu */}
@@ -110,7 +106,7 @@ export default function Navbar({ onNavigate, active }: NavbarProps) {
             "&:hover": { bgcolor: "#ffd77a" },
           }}
         >
-          Nhóm 4
+          Nhóm All for one
         </Button>
 
         {/* Mobile menu */}

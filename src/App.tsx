@@ -73,10 +73,6 @@ function HomePage() {
         }}
       />
       <Box ref={homeRef} data-section="home"><Hero /></Box>
-      <Box ref={heroRef} data-section="hero"><Hero1 /></Box>
-      <Box ref={pbcRef} data-section="pbc"><PhanBoiChau /></Box>
-      <Box ref={pctRef} data-section="pct"><PhanChauTrinh /></Box>
-      <Box ref={hcmRef} data-section="hcm"><HoChiMinh /></Box>
       <Box ref={quizRef} data-section="quiz"><Quiz /></Box>
       <Box ref={comparisonRef} data-section="comparison"><Comparison /></Box>
 
