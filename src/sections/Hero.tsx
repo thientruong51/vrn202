@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Box } from "@mui/material";
 import HeyzineFlipbookWithOverlay from "../components/HeyzineFlipbookWithOverlay";
 import backgroundVideo from "../assets/videoplayback (4).mp4";
