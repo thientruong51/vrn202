@@ -45,18 +45,19 @@ export default function TransparencyAI() {
             mb: 3,
           }}
         >
-          Tính minh bạch khi dùng AI tạo hình ảnh (GPT & Gemini)
+          Tính minh bạch khi sử dụng Remini, Clipchamp và Gemini trong dự án
         </Typography>
 
-        {/* 1. Công cụ AI */}
+        {/* 1. Công cụ kỹ thuật được sử dụng */}
         <Box mb={3}>
           <Typography variant="h6" sx={{ fontWeight: 600, mb: 1, color: "secondary.main" }}>
-            1. Công cụ AI đã sử dụng
+            1. Các công cụ kỹ thuật được sử dụng
           </Typography>
-          <Typography>• <b>GPT (OpenAI)</b>: tạo minh hoạ, biểu tượng, texture và background theo prompt.</Typography>
-          <Typography>• <b>Gemini (Google)</b>: tạo ảnh/đồ hoạ bổ sung và biến thể để đa dạng hoá trải nghiệm.</Typography>
+          <Typography>• <b>Remini</b>: phục hồi và nâng cao chất lượng hình ảnh tư liệu gốc, giúp nội dung trực quan và rõ nét hơn.</Typography>
+          <Typography>• <b>Clipchamp</b>: tạo giọng đọc AI tự nhiên cho phần thuyết minh, video học tập hoặc flipbook minh họa.</Typography>
+          <Typography>• <b>Gemini (Google)</b>: được dùng làm chatbox học tập — hỗ trợ trao đổi, hỏi – đáp, và gợi mở lý thuyết cho các phần nội dung học thuật ở trên.</Typography>
           <Typography sx={{ mt: 1, opacity: 0.85 }}>
-            → Ảnh AI được dùng <i>để minh hoạ khái niệm, timeline, poster mô phỏng phong cách cổ động</i>, giúp nội dung hấp dẫn và trực quan hơn.
+            → Cả ba công cụ chỉ mang tính hỗ trợ kỹ thuật, giúp truyền đạt nội dung hiệu quả hơn, chứ không thay thế vai trò biên soạn và tư duy học thuật của sinh viên.
           </Typography>
         </Box>
         <Divider sx={{ my: 2, borderColor: "secondary.main" }} />
@@ -64,85 +65,69 @@ export default function TransparencyAI() {
         {/* 2. Mục đích sử dụng */}
         <Box mb={3}>
           <Typography variant="h6" sx={{ fontWeight: 600, mb: 1, color: "secondary.main" }}>
-            2. Mục đích sử dụng AI
+            2. Mục đích và giới hạn sử dụng
           </Typography>
-          <Typography>• Nâng cao trải nghiệm người dùng bằng hình ảnh trực quan cho các phần: Dân chủ XHCN, NNPQ XHCN, mốc lịch sử, sơ đồ hoá khái niệm.</Typography>
-          <Typography>• Tạo minh hoạ <i>không có sẵn</i> hoặc khó tìm nguồn mở phù hợp (như icon hệ thống, motif nền, đồ hoạ trừu tượng).</Typography>
-          <Typography>• Tránh lạm dụng: hình AI chỉ mang tính minh hoạ, <b>không</b> dùng để thay thế tài liệu gốc hay chứng cứ lịch sử.</Typography>
+          <Typography>• <b>Remini</b>: dùng để khôi phục hình ảnh mờ, cũ hoặc chất lượng thấp, giúp giữ nguyên giá trị tư liệu gốc.</Typography>
+          <Typography>• <b>Clipchamp</b>: giúp tạo giọng đọc thuyết minh, nâng cao khả năng tiếp cận cho người học qua hình thức nghe – nhìn.</Typography>
+          <Typography>• <b>Gemini</b>: được tích hợp như một <i>chatbox học lý thuyết</i>, giúp người học trao đổi về các chủ đề như “Dân chủ XHCN”, “Nhà nước pháp quyền XHCN”, “Cách mạng Tháng Tám”... theo hướng phản biện, đối thoại và làm rõ khái niệm.</Typography>
+          <Typography>• Không công cụ nào được phép chỉnh sửa, thay thế hay tạo mới dữ liệu học thuật – tất cả nội dung gốc do sinh viên biên soạn và chịu trách nhiệm.</Typography>
         </Box>
         <Divider sx={{ my: 2, borderColor: "secondary.main" }} />
 
-        {/* 3. Vai trò hỗ trợ – không thay thế */}
-        <Box
-          mb={3}
-          sx={{
-            p: 2,
-            borderRadius: 2,
-            border: "1px solid",
-            borderColor: "secondary.main",
-          }}
-        >
+        {/* 3. Vai trò hỗ trợ */}
+        <Box mb={3} sx={{ p: 2, borderRadius: 2, border: "1px solid", borderColor: "secondary.main" }}>
           <Typography variant="h6" sx={{ fontWeight: 600, mb: 1, color: "secondary.main" }}>
             3. Vai trò hỗ trợ – không thay thế
           </Typography>
-          <Typography>• AI chỉ hỗ trợ tạo minh hoạ/đồ hoạ; nội dung học thuật, luận điểm, phân tích do sinh viên biên soạn.</Typography>
-          <Typography>• Text, trích dẫn, lập luận đều trải qua biên tập thủ công và đối chiếu nguồn.</Typography>
-          <Typography>• Không dùng AI để tạo giả mạo tư liệu lịch sử hay thay đổi ngữ cảnh tài liệu nguyên bản.</Typography>
+          <Typography>• Remini chỉ khôi phục ảnh, không tạo hình mới hoặc thêm chi tiết ngoài bản gốc.</Typography>
+          <Typography>• Clipchamp chỉ hỗ trợ đọc lại nội dung văn bản có sẵn; không sáng tác hay thêm ý kiến mới.</Typography>
+          <Typography>• Gemini chỉ gợi mở và giải thích lý thuyết – giúp người học tự phản biện và hiểu sâu hơn, <b>không thay thế giảng viên hoặc nguồn học thuật chính thống</b>.</Typography>
         </Box>
         <Divider sx={{ my: 2, borderColor: "secondary.main" }} />
 
-        {/* 4. Quy trình kiểm tra & ghi nhãn */}
+        {/* 4. Quy trình ghi nhãn */}
         <Box mb={3}>
           <Typography variant="h6" sx={{ fontWeight: 600, mb: 1, color: "secondary.main" }}>
-            4. Quy trình kiểm tra và ghi nhãn nội dung
+            4. Quy trình ghi nhãn và kiểm tra
           </Typography>
-          <Typography>• <b>Ghi nhãn</b>: nơi sử dụng hình AI sẽ gắn tag “AI-generated” trong chú thích/alt text hoặc góc ảnh.</Typography>
-          <Typography>• <b>Kiểm duyệt</b>: lọc prompt/ảnh để loại nội dung sai lệch, nhạy cảm; kiểm tra tính phù hợp với ngữ cảnh học thuật.</Typography>
-          <Typography>• <b>Nhật ký prompt</b>: lưu mô tả ngắn gọn (mục tiêu, style, ràng buộc) để truy vết và tái tạo khi cần.</Typography>
+          <Typography>• Ảnh được phục hồi bằng Remini sẽ ghi chú rõ “Ảnh phục hồi kỹ thuật số (Remini)”.</Typography>
+          <Typography>• Giọng đọc AI có chú thích “Voice generated by Clipchamp”.</Typography>
+          <Typography>• Chatbox hiển thị “Powered by Gemini – hỗ trợ trao đổi lý thuyết”, để người học phân biệt phản hồi AI và nội dung học thuật chính thức.</Typography>
+          <Typography>• Tất cả phản hồi AI đều được kiểm duyệt về ngữ nghĩa, không chứa thông tin sai lệch hoặc xuyên tạc khái niệm học thuật.</Typography>
         </Box>
         <Divider sx={{ my: 2, borderColor: "secondary.main" }} />
 
-        {/* 5. Phạm vi & giới hạn sử dụng */}
+        {/* 5. Phạm vi & giới hạn */}
         <Box mb={3}>
           <Typography variant="h6" sx={{ fontWeight: 600, mb: 1, color: "secondary.main" }}>
-            5. Phạm vi và giới hạn
+            5. Phạm vi và giới hạn sử dụng
           </Typography>
-          <Typography>• Không dùng ảnh AI để mô tả, nhại lại khuôn mặt cá nhân có thật hoặc logo/nhãn hiệu.</Typography>
-          <Typography>• Tránh chủ đề nhạy cảm; không dùng AI để suy diễn, gán ghép, hay tạo “tư liệu” lịch sử.</Typography>
-          <Typography>• Với biểu tượng/ảnh văn hoá – lịch sử: ưu tiên nguồn gốc mở/có phép; AI chỉ tạo hình <i>mang tính khái quát</i>.</Typography>
+          <Typography>• Không sử dụng Remini cho mục đích chỉnh sửa khuôn mặt, vật thể hoặc tái tạo tư liệu lịch sử.</Typography>
+          <Typography>• Không dùng Clipchamp để giả giọng người thật hoặc phát ngôn có nội dung nhạy cảm.</Typography>
+          <Typography>• Không dùng Gemini để tạo lập luận, dẫn chứng hay kết luận học thuật; chỉ được phép <i>thảo luận và phản biện hỗ trợ người học</i>.</Typography>
         </Box>
         <Divider sx={{ my: 2, borderColor: "secondary.main" }} />
 
-        {/* 6. Đạo đức – bản quyền – quyền sử dụng */}
+        {/* 6. Tính minh bạch khi dùng Gemini */}
         <Box mb={3}>
           <Typography variant="h6" sx={{ fontWeight: 600, mb: 1, color: "secondary.main" }}>
-            6. Đạo đức, bản quyền và quyền sử dụng
+            6. Tính minh bạch khi sử dụng Gemini làm chatbox học tập lý thuyết
           </Typography>
-          <Typography>• Tôn trọng bản quyền: ghi nguồn tài liệu gốc; ảnh AI không sao chép nguyên mẫu có bảo hộ.</Typography>
-          <Typography>• Hạn chế sử dụng phong cách cá nhân của nghệ sĩ đương đại nếu có rủi ro về quyền.</Typography>
-          <Typography>• Lưu siêu dữ liệu (khi khả thi) để đánh dấu nguồn gốc AI trong tệp (IPTC/XMP).</Typography>
+          <Typography>• Chatbox Gemini được triển khai trong các phần lý thuyết của website (ví dụ: Cách mạng Tháng Tám...).</Typography>
+          <Typography>• Mục tiêu của Gemini là giúp người học <b>đặt câu hỏi, đối thoại và tự kiểm tra hiểu biết</b> qua tương tác trực tiếp.</Typography>
+          <Typography>• Mọi phản hồi Gemini đều được ghi chú rõ nguồn (AI-generated), giúp đảm bảo tính minh bạch và phân biệt với phần nội dung do sinh viên viết.</Typography>
+          <Typography>• Việc tích hợp Gemini nhằm khuyến khích <b>tư duy phản biện</b> và <b>tự học có hướng dẫn</b>, không thay thế vai trò của giảng viên hay tài liệu gốc.</Typography>
         </Box>
         <Divider sx={{ my: 2, borderColor: "secondary.main" }} />
 
-        {/* 7. An toàn & giảm rủi ro sai lệch */}
-        <Box mb={3}>
-          <Typography variant="h6" sx={{ fontWeight: 600, mb: 1, color: "secondary.main" }}>
-            7. An toàn và giảm rủi ro sai lệch
-          </Typography>
-          <Typography>• Áp ràng buộc prompt: trung tính, không định kiến; không gợi ý hành vi nguy hiểm.</Typography>
-          <Typography>• Soi chiếu nội dung: ảnh AI phải khớp mô tả, không tạo ngụy bằng chứng.</Typography>
-          <Typography>• Quy trình “4 mắt”: người thứ hai duyệt lại trước khi đưa lên web.</Typography>
-        </Box>
-        <Divider sx={{ my: 2, borderColor: "secondary.main" }} />
-
-        {/* 8. Cam kết minh bạch */}
+        {/* 7. Cam kết minh bạch */}
         <Box mb={4}>
           <Typography variant="h6" sx={{ fontWeight: 600, mb: 1, color: "secondary.main" }}>
-            8. Cam kết minh bạch và liêm chính học thuật
+            7. Cam kết minh bạch và liêm chính học thuật
           </Typography>
-          <Typography>• Công bố rõ nơi dùng hình AI; phân biệt minh hoạ AI với tư liệu gốc.</Typography>
-          <Typography>• Nội dung học thuật (văn bản, biểu đồ số liệu, lập luận) do sinh viên chịu trách nhiệm biên soạn.</Typography>
-          <Typography>• Sẵn sàng cung cấp prompt tóm tắt theo yêu cầu kiểm tra trong phạm vi học thuật.</Typography>
+          <Typography>• Toàn bộ nội dung học thuật, lập luận và trích dẫn đều do sinh viên tự biên soạn và chịu trách nhiệm.</Typography>
+          <Typography>• Công khai rõ nơi sử dụng AI, phân biệt giữa công cụ hỗ trợ kỹ thuật (Remini, Clipchamp, Gemini) và phần học thuật gốc.</Typography>
+          <Typography>• Mọi yêu cầu kiểm chứng đều có thể đáp ứng bằng bản gốc, prompt log hoặc metadata sử dụng AI.</Typography>
         </Box>
 
         {/* Nút quay lại */}

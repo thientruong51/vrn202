@@ -1,19 +1,13 @@
-// src/sections/Comparison.tsx
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Box, TextField, IconButton, Tooltip, Typography } from "@mui/material";
-import SendRoundedIcon from "@mui/icons-material/SendRounded";
-
-// Firestore
+import { useEffect, useRef, useState } from "react";
 import {
-  addDoc,
-  collection,
-  onSnapshot,
-  query,
-  orderBy,
-  limit,
-  serverTimestamp,
-} from "firebase/firestore";
-import { db } from "../firebase";
+  Box,
+  IconButton,
+  TextField,
+  Tooltip,
+  Typography,
+  CircularProgress,
+} from "@mui/material";
+import SendRoundedIcon from "@mui/icons-material/SendRounded";
 
 /* Cho phép dùng <spline-viewer> trong TSX */
 declare global {
@@ -31,51 +25,29 @@ declare global {
   }
 }
 
-type FloatingComment = {
-  id: string;
-  text: string;
-  radius: number;
-  baseAngle: number;
-  angularSpeed: number;
-  size: number;
-  color: string;
-  bornAt: number;
-  ttlMs: number;
-  createdAt?: any;
-};
+type ChatMsg = { from: "user" | "ai"; text: string };
 
-const COLOR_POOL = [
-  "#ffe08a",
-  "#c8ff8a",
-  "#8afff3",
-  "#ffb8e6",
-  "#bda0ff",
-  "#ffcf99",
-  "#c0ffb3",
-  "#9ee7ff",
-  "#ffd6a5",
-  "#d6b8ff",
-];
-
-export default function Comparison() {
+export default function GeminiChat3D() {
   const [ready, setReady] = useState(false);
   const injected = useRef(false);
-  const wrapRef = useRef<HTMLDivElement | null>(null);
-  const [size, setSize] = useState({ w: 0, h: 0 });
   const [input, setInput] = useState("");
-  const [items, setItems] = useState<FloatingComment[]>([]);
-  const animRef = useRef<number | null>(null);
-  const t0Ref = useRef<number>(performance.now());
+  const [loading, setLoading] = useState(false);
+  const [messages, setMessages] = useState<ChatMsg[]>([
+    {
+      from: "ai",
+      text:
+        "Xin chào👋! \n Tôi là AF1 – trợ lý học tập giúp bạn ôn phần \n 'Chương 1: Đảng Cộng sản Việt Nam ra đời và lãnh đạo đấu tranh giành chính quyền (1930–1945)'.\n Hãy đặt câu hỏi để cùng học nhé!",
+    },
+  ]);
+  const chatRef = useRef<HTMLDivElement | null>(null);
 
-  // inject script spline
+  // Load script Spline
   useEffect(() => {
     if (injected.current) return;
-    const existing = document.querySelector<HTMLScriptElement>(
-      'script[data-spline="viewer"]'
-    );
+    const existing = document.querySelector('script[data-spline="viewer"]');
     if (existing) {
-      injected.current = true;
       setReady(true);
+      injected.current = true;
       return;
     }
     const s = document.createElement("script");
@@ -88,160 +60,76 @@ export default function Comparison() {
     injected.current = true;
   }, []);
 
-  // đo kích thước khung
-  useEffect(() => {
-    if (!wrapRef.current) return;
-    const ro = new ResizeObserver(([entry]) => {
-      const cr = entry.contentRect;
-      setSize({ w: cr.width, h: cr.height });
-    });
-    ro.observe(wrapRef.current);
-    return () => ro.disconnect();
-  }, []);
-
-  // vòng lặp animation (giữ cho opacity, TTL)
-  useEffect(() => {
-    const tick = (now: number) => {
-      setItems((prev) =>
-        prev.filter((c) => c.ttlMs === 0 || now - c.bornAt < c.ttlMs)
-      );
-      animRef.current = requestAnimationFrame(tick);
-    };
-    animRef.current = requestAnimationFrame(tick);
-    return () => {
-      if (animRef.current) cancelAnimationFrame(animRef.current);
-    };
-  }, []);
-
-  // 🔴 SUBSCRIBE Firestore: nghe comment realtime
-  useEffect(() => {
-    const q = query(
-      collection(db, "comments"),
-      orderBy("createdAt", "desc"),
-      limit(50)
-    );
-    const unsub = onSnapshot(q, (snap) => {
-      const now = performance.now();
-      const arr: FloatingComment[] = [];
-      snap.forEach((doc) => {
-        const d = doc.data() as any;
-        arr.push({
-          id: doc.id,
-          text: d.text ?? "",
-          radius: d.radius ?? 200,
-          baseAngle: d.baseAngle ?? 0,
-          angularSpeed: d.angularSpeed ?? 0.5,
-          size: d.size ?? 16,
-          color: d.color ?? "#ffe08a",
-          bornAt: now,
-          ttlMs: d.ttlMs ?? 0,
-          createdAt: d.createdAt,
-        });
-      });
-      setItems(arr.reverse());
-    });
-    return () => unsub();
-  }, []);
-
-  const center = useMemo(
-    () => ({ cx: size.w / 2, cy: size.h / 2 }),
-    [size]
-  );
-
-  const handleSubmit = async () => {
+  // --- GỬI CHAT QUA FETCH ---
+  const handleSend = async () => {
     const text = input.trim();
     if (!text) return;
-
-    const minR = Math.max(120, Math.min(size.w, size.h) * 0.18);
-    const maxR = Math.max(minR + 80, Math.min(size.w, size.h) * 0.42);
-    const radius = rand(minR, maxR);
-    const baseAngle = rand(0, Math.PI * 2);
-    const angularSpeed =
-      rand(0.35, 0.75) * (Math.random() < 0.5 ? -1 : 1);
-    const sizePx = Math.round(rand(14, 22));
-    const color =
-      COLOR_POOL[Math.floor(Math.random() * COLOR_POOL.length)];
+    setInput("");
+    setMessages((prev) => [...prev, { from: "user", text }]);
+    setLoading(true);
 
     try {
-      await addDoc(collection(db, "comments"), {
-        text,
-        radius,
-        baseAngle,
-        angularSpeed,
-        size: sizePx,
-        color,
-        ttlMs: 0,
-        createdAt: serverTimestamp(),
-      });
-      setInput("");
-    } catch (e) {
-      console.error(e);
-    }
-  };
+      const prompt = `
+Bạn là trợ lý học tập môn "Lịch sử Đảng Cộng sản Việt Nam" – có nhiệm vụ hỗ trợ sinh viên ôn tập, 
+giải thích và đối thoại về giai đoạn Đảng ra đời và lãnh đạo đấu tranh giành chính quyền (1930–1945).
 
-  // render comment bay vòng tròn
-  const renderFloating = () => {
-    const now = performance.now();
-    return items.map((c) => {
-      const t = (now - t0Ref.current) / 1000;
-      const angle = c.baseAngle + c.angularSpeed * t;
-      const x = center.cx + c.radius * Math.cos(angle);
-      const y = center.cy + c.radius * Math.sin(angle);
+🎯 PHẠM VI KIẾN THỨC CHO PHÉP:
+"Chương 1: Đảng Cộng sản Việt Nam ra đời và lãnh đạo đấu tranh giành chính quyền (1930 - 1945)
+II. Đảng lãnh đạo đấu tranh giành chính quyền (1930 - 1945)
+3. Phong trào giải phóng dân tộc 1939 - 1945 (phần 1)
+3. Phong trào giải phóng dân tộc 1939 - 1945 (phần 2)
+4. Tính chất, ý nghĩa và kinh nghiệm của Cách mạng Tháng Tám năm 1945
+Đọc trước giáo trình Lịch sử Đảng Cộng sản Việt Nam từ trang 1 đến trang 125"
 
-      let opacity = 1;
-      if (c.ttlMs > 0) {
-        const life = now - c.bornAt;
-        const fade = Math.min(
-          1,
-          Math.max(0, (c.ttlMs - life) / 1000)
-        );
-        opacity = life < 800 ? life / 800 : fade;
-      }
+📘 NGUYÊN TẮC TRẢ LỜI:
+- Trả lời ngắn gọn, chính xác, dễ hiểu, bám sát phạm vi nội dung ở trên.
+- Có thể **nêu dẫn chứng lịch sử cụ thể** như: phong trào, địa danh, nhân vật, nghị quyết, hội nghị, 
+hoặc các sự kiện tiêu biểu (ví dụ: Cao trào kháng Nhật cứu nước, Hội nghị Trung ương 8 – 1941, 
+Mặt trận Việt Minh, Võ Nguyên Giáp, Nguyễn Ái Quốc, Bắc Sơn, Nam Kỳ, v.v...).
+- Tuyệt đối **không đề cập đến thời kỳ sau 1945**, các vấn đề chính trị hiện nay, hoặc giai đoạn Đổi Mới 1986.
+- Nếu người học hỏi ngoài phạm vi Chương 1, hãy trả lời:
+  👉 "⚠️ Nội dung này nằm ngoài phạm vi Chương 1 của giáo trình Lịch sử Đảng Cộng sản Việt Nam."
 
-      const deg = (angle * 180) / Math.PI + 90;
+Câu hỏi của sinh viên: ${text}
+`;
 
-      return (
-        <Box
-          key={c.id}
-          sx={{
-            position: "absolute",
-            left: 0,
-            top: 0,
-            transform: `translate(${x}px, ${y}px) rotate(${deg}deg) translate(-50%, -50%)`,
-            willChange: "transform, opacity",
-            pointerEvents: "none",
-            opacity,
-            zIndex: 2,
-            filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.6))",
-          }}
-        >
-          <Box
-            sx={{
-              transform: "rotate(-90deg)",
-              px: 1.2,
-              py: 0.6,
-              borderRadius: 999,
-              background: "rgba(0,0,0,0.35)",
-              border: "1px solid rgba(255,255,255,0.18)",
-              backdropFilter: "blur(2px)",
-              whiteSpace: "nowrap",
-              fontSize: c.size,
-              fontWeight: 700,
-              color: c.color,
-              letterSpacing: 0.4,
-              textShadow: "0 1px 2px rgba(0,0,0,0.5)",
-            }}
-          >
-            {c.text}
-          </Box>
-        </Box>
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${
+          import.meta.env.VITE_GEMINI_API_KEY
+        }`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+          }),
+        }
       );
-    });
+
+      const data = await response.json();
+      const reply =
+        data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+        "⚠️ Không có phản hồi từ Gemini.";
+      setMessages((prev) => [...prev, { from: "ai", text: reply }]);
+    } catch (error) {
+      console.error("❌ Lỗi gọi Gemini API:", error);
+      setMessages((prev) => [
+        ...prev,
+        { from: "ai", text: "⚠️ Lỗi kết nối đến Gemini API." },
+      ]);
+    } finally {
+      setLoading(false);
+      setTimeout(() => {
+        chatRef.current?.scrollTo({
+          top: chatRef.current.scrollHeight,
+          behavior: "smooth",
+        });
+      }, 100);
+    }
   };
 
   return (
     <Box
-      ref={wrapRef}
       sx={{
         position: "relative",
         height: "100vh",
@@ -250,82 +138,104 @@ export default function Comparison() {
         bgcolor: "black",
       }}
     >
-      {/* Spline background */}
-    {ready && (
-  <Box
-    component="spline-viewer"
-    sx={{ position: "absolute", inset: 0 }}
-    {...({ "loading-anim-type": "none" } as any)}
-    url="https://prod.spline.design/nPQzWw-fod7rsfDx/scene.splinecode"
-  />
-)}
+      {/* NỀN 3D – vẫn tương tác được */}
+      {ready && (
+        <Box
+          component="spline-viewer"
+          {...({ "loading-anim-type": "none" } as any)}
+          url="https://prod.spline.design/nPQzWw-fod7rsfDx/scene.splinecode"
+          sx={{
+            position: "absolute",
+            inset: 0,
+            zIndex: 0,
+            pointerEvents: "auto",
+          }}
+        />
+      )}
 
-      {/* Comment floating */}
-      <Box sx={{ position: "absolute", inset: 0, zIndex: 2, pointerEvents: "none" }}>
-        {renderFloating()}
-      </Box>
-      {/* Lời cảm ơn & hướng dẫn */}
+   
+
+      {/* Chatbox */}
       <Box
         sx={{
           position: "absolute",
           left: 0,
           right: 0,
-          top: 16,
+          bottom: 50,
           display: "flex",
-          justifyContent: "center",
-          zIndex: 3,
-          px: 2,
-          pointerEvents: "none", // không bắt chuột toàn khối
+          flexDirection: "column",
+          alignItems: "center",
+          zIndex: 2,
+          pb: 3,
+          pointerEvents: "none",
         }}
       >
-        <Box
-          sx={{
-            pointerEvents: "auto", // cho phép bôi đen copy text
-            width: "min(1100px, 92vw)",
-            px: 1.6,
-            py: 1,
-            borderRadius: 999,
-            background: "rgba(0,0,0,0.5)",
-            border: "1px solid rgba(255,255,255,0.18)",
-            backdropFilter: "blur(8px)",
-            boxShadow: "0 8px 28px rgba(0,0,0,0.45)",
-          }}
-        >
+        <Box sx={{ pointerEvents: "auto", textAlign: "center", mb: 1.5 }}>
           <Typography
+            variant="h5"
             sx={{
-              color: "rgba(255,255,255,0.92)",
-              fontSize: { xs: 13.5, md: 15 },
-              lineHeight: 1.6,
-              textAlign: "center",
-              fontWeight: 500,
+              color: "#ec1717ff",
+              fontWeight: 700,
+              textShadow: "0 0 10px rgba(255,255,255,0.3)",
             }}
           >
-            <strong style={{ fontWeight: 800, color: "#eeb72b" }}>
-              Cảm ơn bạn đã quan tâm sản phẩm!
-            </strong>
-            <br />
-            Bạn có thể để lại lời nhắn hay thông điệp bên dưới — nội dung sẽ xuất hiện
-            và bay vòng quanh màn hình để mọi người cùng thấy ✨
+            💬 Chat học tập cùng AF1
           </Typography>
-
         </Box>
-      </Box>
 
+        {/* Lịch sử chat */}
+        <Box
+          ref={chatRef}
+          sx={{
+            width: "min(900px, 92vw)",
+            height: "60vh",
+            overflowY: "auto",
+            p: 2,
+            borderRadius: 3,
+            background: "rgba(255,255,255,0.08)",
+            border: "1px solid rgba(255,255,255,0.15)",
+            mb: 2,
+            pointerEvents: "auto",
+          }}
+        >
+          {messages.map((msg, i) => (
+            <Box
+              key={i}
+              sx={{
+                display: "flex",
+                justifyContent:
+                  msg.from === "user" ? "flex-end" : "flex-start",
+                mb: 1.5,
+              }}
+            >
+              <Box
+                sx={{
+                  px: 2,
+                  py: 1,
+                  borderRadius: 3,
+                  background:
+                    msg.from === "user"
+                      ? "linear-gradient(135deg,#C1172C,#E95E42)"
+                      : "rgba(255,255,255,0.15)",
+                  color: "#fff",
+                  maxWidth: "75%",
+                  fontSize: 15,
+                  boxShadow: "0 3px 12px rgba(0,0,0,0.4)",
+                  whiteSpace: "pre-line",
+                }}
+              >
+                {msg.text}
+              </Box>
+            </Box>
+          ))}
+          {loading && (
+            <Box sx={{ display: "flex", justifyContent: "center", py: 2 }}>
+              <CircularProgress size={24} sx={{ color: "#fff" }} />
+            </Box>
+          )}
+        </Box>
 
-      {/* Ô nhập bình luận */}
-      <Box
-        sx={{
-          position: "absolute",
-          left: 0,
-          right: 0,
-          bottom: 20,
-          display: "flex",
-          justifyContent: "center",
-          zIndex: 3,
-          px: 2,
-          pointerEvents: "auto",
-        }}
-      >
+        {/* Ô nhập chat */}
         <Box
           sx={{
             width: "min(900px, 92vw)",
@@ -333,40 +243,37 @@ export default function Comparison() {
             alignItems: "center",
             gap: 1,
             background: "rgba(0,0,0,0.5)",
-            border: "1px solid rgba(255,255,255,0.18)",
+            border: "1px solid rgba(255,255,255,0.2)",
             borderRadius: 999,
             px: 1.2,
             py: 0.6,
             backdropFilter: "blur(8px)",
-            boxShadow: "0 10px 30px rgba(0,0,0,0.45)",
+            pointerEvents: "auto",
           }}
         >
           <TextField
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") handleSubmit();
-            }}
-            placeholder="Viết bình luận của bạn…"
+            onKeyDown={(e) => e.key === "Enter" && handleSend()}
+            placeholder="Nhập câu hỏi về Chương 1 (1939–1945)"
             variant="standard"
             InputProps={{
               disableUnderline: true,
               sx: {
-                color: "white",
+                color: "#fff",
                 px: 1.5,
-                py: 1,
-                fontSize: { xs: 14, md: 16 },
+                fontSize: 15,
                 width: "100%",
               },
             }}
             sx={{ flex: 1 }}
           />
-          <Tooltip title="Gửi bình luận">
+          <Tooltip title="Gửi câu hỏi">
             <IconButton
-              onClick={handleSubmit}
+              onClick={handleSend}
               sx={{
-                color: "white",
-                bgcolor: "rgba(255,255,255,0.12)",
+                color: "#fff",
+                bgcolor: "rgba(255,255,255,0.1)",
                 "&:hover": { bgcolor: "rgba(255,255,255,0.2)" },
               }}
             >
@@ -377,9 +284,4 @@ export default function Comparison() {
       </Box>
     </Box>
   );
-}
-
-// util
-function rand(min: number, max: number) {
-  return Math.random() * (max - min) + min;
 }

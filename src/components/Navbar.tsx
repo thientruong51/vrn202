@@ -1,4 +1,3 @@
-// components/Navbar.tsx
 import { useState } from "react";
 import {
   AppBar,
@@ -16,36 +15,44 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useTheme } from "@mui/material/styles";
-import { useNavigate } from "react-router-dom"; // ✅ thêm
+import { useNavigate, useLocation } from "react-router-dom";
 
 interface NavbarProps {
-  onNavigate: (section: string) => void;
+  onNavigate?: (section: string) => void;
   active?: string;
 }
 
 const MENU = [
-  { id: "home", label: "Flipbook CMT8" },
-  { id: "quiz", label: "Quiz" },
-  { id: "comparison", label: "Thông điệp" },
+  { id: "home", label: "Flipbook CMT8", route: "/" },
+  { id: "quiz", label: "Quiz", route: "/quiz" },
+  { id: "chatbox", label: "Chatbox AF1", route: "/chatbox" },
   { id: "transparency", label: "Tính minh bạch AI", route: "/transparency-ai" },
-  { id: "qa", label: "Q&A", link: "https://padlet.com/trilm32/ai1805-7lvete4y5bhccuel" },
+  { id: "qa", label: "Q&A", route: "/qa" },
+
 ];
 
 export default function Navbar({ onNavigate, active }: NavbarProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [open, setOpen] = useState(false);
-  const navigate = useNavigate(); // ✅ hook điều hướng
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Xác định route hiện tại để highlight
+  const currentPath = location.pathname;
+  const isActive = (m: typeof MENU[number]) => {
+    if (m.route) return m.route === currentPath;
+    return active === m.id;
+  };
 
   const handleClick = (m: typeof MENU[number]) => {
-    if (m.link) {
-      window.open(m.link, "_blank");
-    } else if (m.route) {
-      navigate(m.route);
-    } else {
-      onNavigate(m.id);
-    }
-  };
+  if (m.route) {
+    navigate(m.route);
+    window.scrollTo({ top: 0, behavior: "smooth" }); // cuộn lên đầu trang khi đổi route
+  } else if (onNavigate) {
+    onNavigate(m.id); // cho trường hợp Hero có scroll nội trang
+  }
+};
 
   return (
     <AppBar
@@ -58,7 +65,7 @@ export default function Navbar({ onNavigate, active }: NavbarProps) {
       }}
     >
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-        {/* ✅ Logo có link về trang chủ */}
+        {/* Logo → Về trang chủ */}
         <Typography
           onClick={() => navigate("/")}
           sx={{
@@ -71,7 +78,7 @@ export default function Navbar({ onNavigate, active }: NavbarProps) {
           VRN202_AI1805
         </Typography>
 
-        {/* Desktop menu */}
+        {/* MENU cho desktop */}
         {!isMobile && (
           <Box sx={{ flexGrow: 1, display: "flex", gap: 1, ml: 4 }}>
             {MENU.map((m) => (
@@ -79,13 +86,12 @@ export default function Navbar({ onNavigate, active }: NavbarProps) {
                 key={m.id}
                 onClick={() => handleClick(m)}
                 sx={{
-                  color: active === m.id ? "#eeb72b" : "rgba(255,255,255,0.8)",
+                  color: isActive(m) ? "#eeb72b" : "rgba(255,255,255,0.8)",
                   textTransform: "none",
-                  fontWeight: active === m.id ? 700 : 500,
-                  borderBottom:
-                    active === m.id
-                      ? "2px solid #eeb72b"
-                      : "2px solid transparent",
+                  fontWeight: isActive(m) ? 700 : 500,
+                  borderBottom: isActive(m)
+                    ? "2px solid #eeb72b"
+                    : "2px solid transparent",
                   borderRadius: 0,
                   "&:hover": { color: "#eeb72b" },
                 }}
@@ -96,7 +102,7 @@ export default function Navbar({ onNavigate, active }: NavbarProps) {
           </Box>
         )}
 
-        {/* Spirit button */}
+        {/* Nút nhóm */}
         <Button
           variant="contained"
           sx={{
@@ -109,7 +115,7 @@ export default function Navbar({ onNavigate, active }: NavbarProps) {
           Nhóm All for one
         </Button>
 
-        {/* Mobile menu */}
+        {/* MENU mobile */}
         {isMobile && (
           <>
             <IconButton
@@ -135,7 +141,7 @@ export default function Navbar({ onNavigate, active }: NavbarProps) {
                         handleClick(m);
                         setOpen(false);
                       }}
-                      selected={active === m.id}
+                      selected={isActive(m)}
                       sx={{
                         "&.Mui-selected": {
                           bgcolor: "rgba(238,183,43,0.15)",

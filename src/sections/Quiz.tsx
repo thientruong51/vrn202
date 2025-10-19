@@ -23,61 +23,117 @@ type QA = {
 
 const questions: QA[] = [
   {
-    q: "Nguyên tắc cốt lõi bảo đảm dân chủ xã hội chủ nghĩa ở Việt Nam là gì?",
+    q: "Điểm khác biệt cơ bản nhất khiến Cách mạng Tháng Tám trở thành “tất yếu lịch sử” chứ không phải “ăn may” là:",
     opts: [
-      "Quyền công dân chỉ phát sinh khi tham gia hoạt động chính trị – xã hội cụ thể",
-      "Quyền lực nhân dân luôn đứng trên pháp luật, không chịu sự ràng buộc từ hệ thống",
-      "Pháp luật và kỷ cương có thể được điều chỉnh để phù hợp với từng nhóm lợi ích",
-      "Quyền của nhân dân luôn đi đôi với nghĩa vụ, pháp luật, kỷ cương và trách nhiệm"
+      "Đảng Cộng sản đã chủ động chuẩn bị lực lượng chính trị – vũ trang và thời cơ từ trước khi tình thế thay đổi",
+      "Mặt trận Việt Minh đã lợi dụng khéo léo biến động quốc tế để giành chính quyền trước các phe phái khác",
+      "Nhân dân cả nước tự phát hưởng ứng khởi nghĩa khi thấy kẻ thù suy yếu và chính quyền tê liệt",
+      "Sự đầu hàng của Nhật tạo khoảng trống quyền lực để nhân dân vùng dậy giành chính quyền nhanh chóng"
+    ],
+    a: 0,
+    explanation: "Thắng lợi không do may mắn mà nhờ Đảng chủ động chuẩn bị toàn diện cả chính trị, tổ chức và vũ trang trước thời cơ lịch sử."
+  },
+  {
+    q: "Hội nghị Trung ương VIII (5/1941) được xem là “mắt xích quyết định” trong tiến trình dẫn đến thắng lợi năm 1945 vì:",
+    opts: [
+      "Thông qua chương trình 10 điểm tập trung vào cải cách kinh tế và dân sinh trước mắt",
+      "Quyết định phát động khởi nghĩa vũ trang ngay sau khi Nhật – Pháp xung đột tại Đông Dương",
+      "Xác định mâu thuẫn chủ yếu là giữa giai cấp công nhân và địa chủ phong kiến phản động",
+      "Lần đầu tiên đặt nhiệm vụ giải phóng dân tộc lên trên nhiệm vụ giai cấp và cách mạng ruộng đất"
     ],
     a: 3,
-    explanation: "Dân chủ XHCN gắn với pháp luật, kỷ cương và trách nhiệm công dân; quyền luôn đi liền với nghĩa vụ."
+    explanation: "Hội nghị VIII xác định rõ mục tiêu hàng đầu là giải phóng dân tộc, tạo cơ sở lý luận và tổ chức cho Việt Minh ra đời."
   },
   {
-    q: "Điểm khác biệt căn bản của Nhà nước pháp quyền XHCN Việt Nam so với nhà nước pháp quyền tư sản là gì?",
+    q: "Hai “cuộc tổng diễn tập” 1930–1931 và 1936–1939 có ý nghĩa sâu xa nhất đối với thắng lợi 1945 ở chỗ:",
     opts: [
-      "Quyền lực nhà nước được phân công, phối hợp và kiểm soát giữa lập pháp, hành pháp, tư pháp",
-      "Tổ chức và hoạt động đều dựa trên nguyên tắc tập trung dân chủ trong toàn bộ hệ thống",
-      "Đặt dưới sự lãnh đạo của Đảng Cộng sản Việt Nam và hướng tới mục tiêu xã hội chủ nghĩa",
-      "Nhà nước thượng tôn Hiến pháp, pháp luật và bảo đảm sự bình đẳng của mọi công dân"
+      "Chứng minh khả năng đấu tranh hợp pháp trong điều kiện chính quyền thực dân lỏng lẻo",
+      "Tạo dựng kinh nghiệm quân sự và cơ sở vật chất cho lực lượng vũ trang nhân dân",
+      "Rèn luyện Đảng về lý luận, phương pháp lãnh đạo và gắn bó sâu rộng với quần chúng",
+      "Chuẩn bị sẵn mạng lưới tổ chức hành chính để quản lý đất nước sau khi giành chính quyền"
     ],
     a: 2,
-    explanation: "Khác biệt căn bản là Nhà nước XHCN đặt dưới sự lãnh đạo của Đảng và hướng tới mục tiêu XHCN."
+    explanation: "Hai phong trào là “tổng diễn tập” giúp Đảng rèn luyện bản lĩnh, lý luận và gắn bó chặt chẽ với nhân dân – nền tảng thắng lợi 1945."
   },
   {
-    q: "Cơ chế 'Đảng lãnh đạo – Nhà nước quản lý – Nhân dân làm chủ' phản ánh điều gì?",
+    q: "Nói “Cách mạng Tháng Tám là kết quả của sự kết hợp giữa quy luật khách quan và sự chủ động chủ quan” là vì:",
     opts: [
-      "Sự vận hành thống nhất bảo đảm dân chủ thực chất chứ không dừng lại ở hình thức",
-      "Sự phân tầng quyền lực trong đó Đảng giữ toàn bộ quyền lực, Nhà nước chỉ thực thi",
-      "Sự phân công cứng nhắc giữa ba chủ thể quyền lực trong toàn bộ hệ thống chính trị",
-      "Sự tách biệt hoàn toàn quyền lực nhằm ngăn ngừa lạm quyền và tập trung quá mức"
-    ],
-    a: 0,
-    explanation: "Cơ chế này phản ánh sự vận hành thống nhất, bảo đảm dân chủ thực sự; không phải phân tầng hay tách biệt."
-  },
-  {
-    q: "Theo lý thuyết, dân chủ trong lĩnh vực kinh tế của nhân dân được thể hiện ở điểm nào?",
-    opts: [
-      "Quyền tham gia quản lý xã hội, ứng cử vào cơ quan quyền lực và trưng cầu ý dân",
-      "Quyền sáng tạo, hưởng thụ các giá trị văn hóa, giáo dục, khoa học và y tế hiện đại",
-      "Quyền làm chủ về tài sản công, quyền lựa chọn việc làm, kinh doanh và phân phối",
-      "Quyền tham gia giám sát, phản biện xã hội đối với hoạt động của bộ máy nhà nước"
+      "Nhật đầu hàng Đồng minh và nhân dân Việt Nam đã nổi dậy tự phát khắp nơi",
+      "Các nước xã hội chủ nghĩa hỗ trợ mạnh mẽ cho Việt Nam giành độc lập",
+      "Thời cơ quốc tế thuận lợi và đường lối cách mạng trong nước được hoạch định chính xác",
+      "Đảng biết vận dụng sự kiện quốc tế để tuyên truyền cho cách mạng trong nước"
     ],
     a: 2,
-    explanation: "Dân chủ kinh tế thể hiện ở quyền làm chủ tài sản công, lựa chọn việc làm, kinh doanh và hưởng thụ thành quả."
+    explanation: "Thắng lợi phản ánh sự hòa quyện giữa thời cơ quốc tế thuận lợi và sự chuẩn bị chủ động, khoa học của Đảng trong nước."
   },
   {
-    q: "Một trong những đặc trưng cơ bản của Nhà nước pháp quyền XHCN Việt Nam là gì?",
+    q: "Vì sao Hội nghị Trung ương VI (11/1939) được xem là bước ngoặt chiến lược của cách mạng Việt Nam?",
     opts: [
-      "Quyền lực nhà nước thống nhất nhưng có sự phân công, phối hợp và kiểm soát chặt chẽ",
-      "Quyền lực được chia tách hoàn toàn, không có cơ chế phối hợp giữa các cơ quan nhà nước",
-      "Quyền lập pháp giữ vị trí tối cao, hành pháp và tư pháp chỉ thi hành theo mệnh lệnh",
-      "Quyền lực được phân tán cho nhiều đảng phái, phản ánh mô hình đa nguyên chính trị"
+      "Phát động phong trào kháng Nhật cứu nước và thành lập mặt trận Việt Minh toàn quốc",
+      "Mở đầu cho quá trình chuyển hướng từ đấu tranh bí mật sang hoạt động công khai",
+      "Thay khẩu hiệu “chống đế quốc” bằng “chống địa chủ phong kiến” trong chiến lược cách mạng",
+      "Đưa phong trào từ giai đoạn đấu tranh đòi dân sinh, dân chủ sang chuẩn bị khởi nghĩa vũ trang"
+    ],
+    a: 3,
+    explanation: "Hội nghị VI chuyển hướng chiến lược toàn diện, đặt nhiệm vụ giải phóng dân tộc và chuẩn bị khởi nghĩa vũ trang làm trung tâm."
+  },
+  {
+    q: "Bản chất “chủ động” trong thắng lợi Cách mạng Tháng Tám thể hiện rõ nhất ở:",
+    opts: [
+      "Việt Minh phát động phong trào quần chúng đòi cải cách kinh tế, xã hội trước khi chiến tranh kết thúc",
+      "Đảng kiên trì xây dựng lực lượng, căn cứ địa và chủ trương khởi nghĩa ngay khi thời cơ xuất hiện",
+      "Phong trào vũ trang miền Bắc và Nam Bộ diễn ra độc lập, không có sự chỉ đạo thống nhất",
+      "Nhân dân tự phát nổi dậy, còn Đảng chỉ kịp thời hợp thức hóa chính quyền mới"
+    ],
+    a: 1,
+    explanation: "Đảng chủ động chuẩn bị đầy đủ cả về tổ chức, lực lượng, căn cứ địa và quyết định đúng thời điểm nổ khởi nghĩa."
+  },
+  {
+    q: "Câu nói của Hồ Chí Minh: “Thời cơ nghìn năm có một chỉ đến khi dân ta đã sẵn sàng giành lấy nó” phản ánh quan điểm nào?",
+    opts: [
+      "Mọi thắng lợi đều do may mắn và hoàn cảnh lịch sử thuận lợi quyết định",
+      "Thời cơ cách mạng là yếu tố ngẫu nhiên, phụ thuộc biến động quốc tế",
+      "Thời cơ chỉ có ý nghĩa khi lực lượng cách mạng đã được chuẩn bị kỹ lưỡng",
+      "Đảng phải chờ đợi thời cơ quốc tế chín muồi mới có thể phát động khởi nghĩa"
+    ],
+    a: 2,
+    explanation: "Hồ Chí Minh khẳng định: thời cơ chỉ có giá trị khi cách mạng đã được chuẩn bị toàn diện để chủ động nắm bắt và hành động."
+  },
+  {
+    q: "Vai trò nổi bật của phong trào “Kháng Nhật cứu nước” (3–8/1945) là:",
+    opts: [
+      "Giải quyết triệt để nạn đói và khôi phục sản xuất trong vùng Nhật chiếm đóng",
+      "Tạo khí thế cách mạng và mở rộng khu giải phóng – bàn đạp trực tiếp cho Tổng khởi nghĩa",
+      "Lôi kéo các lực lượng thân Nhật vào mặt trận thống nhất chống thực dân Pháp",
+      "Huy động nguồn viện trợ của Liên Xô và Trung Quốc cho lực lượng Việt Minh"
+    ],
+    a: 1,
+    explanation: "Phong trào kháng Nhật cứu nước đã tạo nên cao trào cách mạng toàn quốc, củng cố khu giải phóng Việt Bắc – bàn đạp tổng khởi nghĩa."
+  },
+  {
+    q: "Tuyên ngôn Độc lập (2/9/1945) không chỉ khai sinh một quốc gia mà còn mang ý nghĩa quốc tế sâu sắc vì:",
+    opts: [
+      "Đặt cách mạng Việt Nam trong dòng chảy chung của tư tưởng nhân quyền và tự do nhân loại",
+      "Thể hiện sự ủng hộ đối với khối Đồng minh trong công cuộc tiêu diệt phát xít",
+      "Khẳng định Việt Nam là thành viên đầu tiên của Liên Hiệp Quốc sau Thế chiến II",
+      "Góp phần chấm dứt hoàn toàn chế độ phong kiến và quân chủ trên toàn Đông Dương"
     ],
     a: 0,
-    explanation: "Đặc trưng nổi bật là quyền lực thống nhất nhưng có phân công, phối hợp, kiểm soát giữa lập pháp, hành pháp, tư pháp."
+    explanation: "Tuyên ngôn Độc lập khẳng định giá trị phổ quát của quyền con người, đưa cách mạng Việt Nam hòa vào trào lưu tiến bộ nhân loại."
+  },
+  {
+    q: "Từ bài học của Cách mạng Tháng Tám, bài học quan trọng nhất cho công cuộc xây dựng đất nước hiện nay là:",
+    opts: [
+      "Giữ vững sự lãnh đạo tuyệt đối của Đảng và phát huy sức mạnh toàn dân trong mọi thời điểm",
+      "Tập trung phát triển kinh tế – kỹ thuật để tránh xung đột chính trị",
+      "Luôn dựa vào sức mạnh quốc tế để đảm bảo nền độc lập dân tộc",
+      "Xem thời cơ là yếu tố quyết định duy nhất của thành công trong mọi cuộc cách mạng"
+    ],
+    a: 0,
+    explanation: "Bài học xuyên suốt là phải kiên định sự lãnh đạo của Đảng, phát huy sức mạnh nhân dân và chủ động nắm bắt thời cơ lịch sử."
   }
 ];
+
 
 
 
@@ -153,7 +209,7 @@ export default function Quiz() {
       <Box
         sx={{
           position: "absolute",
-          top: 38,
+          top: 78,
           left: 56,
           px: 2.2,
           py: 1.2,
