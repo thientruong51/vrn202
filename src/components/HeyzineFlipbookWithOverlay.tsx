@@ -12,7 +12,7 @@ export default function HeyzineFlipbookWithDualOverlay() {
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const bookId = "1cb3bae27e";
+  const bookId = "109c2300db";
   const totalPages = 25;
   const leftPage = spread === 1 ? 1 : spread * 2 - 2;
   const rightPage = spread === 1 ? null : leftPage + 1;
